@@ -1,0 +1,6 @@
+@import "./assets/plugins/material-design-iconic-font/css/material-design-iconic-font.min.css";
+
+* {
+  font-family: Montserrat;
+  font-size: 12px;
+}
