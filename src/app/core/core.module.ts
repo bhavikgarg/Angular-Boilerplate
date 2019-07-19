@@ -17,14 +17,14 @@ import { RouteReusableStrategy } from "./route-reusable-strategy";
 import { AuthenticationService } from "./authentication/authentication.service";
 import { CredentialsService } from "./authentication/credentials.service";
 import { AuthenticationGuard } from "./authentication/authentication.guard";
-import { HttpService } from "./http/http.service";
+import { HttpService, HTTP_DYNAMIC_INTERCEPTORS } from "./http/http.service";
 import { HttpCacheService } from "./http/http-cache.service";
 import { ApiPrefixInterceptor } from "./http/api-prefix.interceptor";
 import { ErrorHandlerInterceptor } from "./http/error-handler.interceptor";
 import { CacheInterceptor } from "./http/cache.interceptor";
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule, RouterModule],
   providers: [
     MapAndCatchHandler,
     AuthenticationService,
@@ -34,6 +34,10 @@ import { CacheInterceptor } from "./http/cache.interceptor";
     ApiPrefixInterceptor,
     ErrorHandlerInterceptor,
     CacheInterceptor,
+    {
+      provide: HTTP_DYNAMIC_INTERCEPTORS,
+      useValue: []
+    },
     {
       provide: HttpClient,
       useClass: HttpService

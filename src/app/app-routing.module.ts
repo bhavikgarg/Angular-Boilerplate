@@ -1,27 +1,32 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AuthenticationGuard } from "@app/core";
-import { Shell } from "@app/shell/shell.service";
-
+import { ShellComponent } from "./shell/shell.component";
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "temp",
-    pathMatch: "full"
+    component: ShellComponent,
+    canActivate: [AuthenticationGuard],
+    canActivateChild: [AuthenticationGuard],
+
+    children: [
+      {
+        path: "",
+        redirectTo: "home",
+        pathMatch: "full"
+      },
+      {
+        path: "home",
+        loadChildren: () => import("./home/home.module").then(m => m.HomeModule)
+      },
+      {
+        path: "temp",
+        loadChildren: () => import("./temp/temp.module").then(m => m.TempModule)
+      }
+    ],
+    // Reuse ShellComponent instance when navigating between child views
+    data: { reuse: true }
   },
-  // {
-  //   path: "temp",
-  //   loadChildren: () => import("./temp/temp.module").then(m => m.TempModule),
-  //   canActivate: [AuthenticationGuard],
-  //   // Reuse ShellComponent instance when navigating between child views
-  //   data: { reuse: true }
-  // },
-  Shell.childRoutes([
-    {
-      path: "temp",
-      loadChildren: () => import("./temp/temp.module").then(m => m.TempModule)
-    }
-  ]),
   {
     path: "login",
     loadChildren: () => import("./login/login.module").then(m => m.LoginModule)
@@ -29,7 +34,7 @@ const routes: Routes = [
   },
   {
     path: "**",
-    redirectTo: "temp"
+    redirectTo: ""
   }
 ];
 

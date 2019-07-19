@@ -3,7 +3,8 @@ import {
   Router,
   CanActivate,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot
+  RouterStateSnapshot,
+  CanActivateChild
 } from "@angular/router";
 
 import { Logger } from "../logger.service";
@@ -12,7 +13,7 @@ import { CredentialsService } from "./credentials.service";
 const log = new Logger("AuthenticationGuard");
 
 @Injectable()
-export class AuthenticationGuard implements CanActivate {
+export class AuthenticationGuard implements CanActivate, CanActivateChild {
   constructor(
     private router: Router,
     private credentialsService: CredentialsService
@@ -26,10 +27,16 @@ export class AuthenticationGuard implements CanActivate {
       return true;
     }
     log.debug("Not authenticated, redirecting and adding redirect url...");
-    this.router.navigate(["/login"], {
-      queryParams: { redirect: state.url },
-      replaceUrl: true
+    this.router.navigate(["./login"], {
+      queryParams: { redirect: state.url }
     });
     return false;
+  }
+
+  canActivateChild(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    return this.canActivate(route, state);
   }
 }

@@ -6,7 +6,7 @@ import { _throw } from "rxjs/observable/throw";
 
 @Injectable()
 export class MapAndCatchHandler {
-  construnctor() {}
+  constructor() {}
   mapAndCatch(req) {
     return req
       .map((res: Response) => {
