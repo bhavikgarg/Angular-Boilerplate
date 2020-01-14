@@ -1,25 +1,23 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
-import { RouterTestingModule } from '@angular/router/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { RouterTestingModule } from "@angular/router/testing";
 
-import { AuthenticationService, CredentialsService, I18nService } from '@app/core';
-import { MockAuthenticationService } from '@app/core/authentication/authentication.service.mock';
-import { MockCredentialsService } from '@app/core/authentication/credentials.service.mock';
-import { HeaderComponent } from './header.component';
+import { AuthenticationService, CredentialsService } from "@app/core";
+import { MockAuthenticationService } from "@app/core/authentication/authentication.service.mock";
+import { MockCredentialsService } from "@app/core/authentication/credentials.service.mock";
+import { HeaderComponent } from "./header.component";
 
-describe('HeaderComponent', () => {
+describe("HeaderComponent", () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, NgbModule, TranslateModule.forRoot()],
+      imports: [RouterTestingModule, NgbModule],
       declarations: [HeaderComponent],
       providers: [
         { provide: AuthenticationService, useClass: MockAuthenticationService },
-        { provide: CredentialsService, useClass: MockCredentialsService },
-        I18nService
+        { provide: CredentialsService, useClass: MockCredentialsService }
       ]
     }).compileComponents();
   }));
@@ -30,7 +28,7 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
