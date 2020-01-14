@@ -4,10 +4,15 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --aot=true --output-path=dist/dev",
+    "build:local": "ng build --configuration=local --aot=true --output-path=dist/local",
+    "build:delta": "ng build --configuration=delta --prod --aot=true --output-path=dist/delta",
+    "build:prod": "ng build --configuration=production --prod --aot=true --output-path=dist/prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "compodoc": "npx compodoc -p src/tsconfig.app.json"
+
   },
   "private": true,
   "dependencies": {
